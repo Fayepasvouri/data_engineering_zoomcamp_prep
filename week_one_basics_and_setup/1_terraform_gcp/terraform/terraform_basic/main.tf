@@ -8,7 +8,7 @@ terraform {
 }
 
 provider "google" {
-  credentials = file("xxxxxxxxxxxx.json")
+  credentials = file("creds path .json")
   project     = "zinc-epigram-471514-s3"
   region      = "europe-west2"
 }
