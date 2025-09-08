@@ -1,8 +1,9 @@
 FROM python:3.9
 
-RUN pip install --trusted-host pypi.org --trusted-host files.pythonhosted.org pandas
+RUN apt-get update && apt-get install -y wget
+RUN pip install --trusted-host pypi.org --trusted-host files.pythonhosted.org pandas pyarrow sqlalchemy psycopg2
 
 WORKDIR /app
-COPY pipeline.py pipeline.py
+COPY ingest_data.py ingest_data.py
 
-ENTRYPOINT ["bash"]
+ENTRYPOINT ["python", "ingest_data.py"]
