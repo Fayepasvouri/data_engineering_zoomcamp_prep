@@ -8,14 +8,14 @@ services:
     volumes:
       - "./ny_taxi_postgres_data:/var/lib/postgresql/data:rw"
     ports:
-      - "9090:8080"
+      - "5433:5432"
   pgadmin:
     image: dpage/pgadmin4
     environment:
       - PGADMIN_DEFAULT_EMAIL=admin@admin.com
       - PGADMIN_DEFAULT_PASSWORD=root
     ports:
-      - "8888:80"
+      - "8080:80"
 
 # docker run -it -e POSTGRES_USER=root -e POSTGRES_PASSWORD=root -e POSTGRES_DB=ny_taxi -p 5433:5432 --network=pg-network --name=pg-database postgres:13
 # docker run -it -e PGADMIN_DEFAULT_EMAIL=admin@admin.com -e PGADMIN_DEFAULT_PASSWORD=root -p 8080:80 --network=pg-network --name=pg-admin dpage/pgadmin4
