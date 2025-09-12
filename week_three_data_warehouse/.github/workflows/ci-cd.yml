@@ -1,0 +1,48 @@
+name: CI/CD for Tip Model
+
+on:
+  push:
+    branches:
+      - main   # prod
+      - dev    # dev
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push Serving image
+        run: |
+          IMAGE_NAME=ghcr.io/${{ github.repository }}/tip_model_serving
+          if [[ "${{ github.ref_name }}" == "main" ]]; then
+            TAG=prod
+          else
+            TAG=dev
+          fi
+          docker build -t $IMAGE_NAME:$TAG -f week_three_data_warehouse/Dockerfile.serving .
+          docker push $IMAGE_NAME:$TAG
+
+      - name: Build and push Retrain image
+        run: |
+          IMAGE_NAME=ghcr.io/${{ github.repository }}/tip_model_retrain
+          if [[ "${{ github.ref_name }}" == "main" ]]; then
+            TAG=prod
+          else
+            TAG=dev
+          fi
+          docker build -t $IMAGE_NAME:$TAG -f week_three_data_warehouse/Dockerfile.retrain .
+          docker push $IMAGE_NAME:$TAG

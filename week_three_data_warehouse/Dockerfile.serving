@@ -1,0 +1,1 @@
+FROM emacski/tensorflow-serving:latest-linux_arm64
