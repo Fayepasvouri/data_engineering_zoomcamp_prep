@@ -1,4 +1,4 @@
-# Data Engineering Zoomcamp (Bootcamp)
+# Data Engineering Zoomcamp (Bootcamp) with MLOps Included
 
 ### Learning data engineering from scratch with Zoomcamp
 
