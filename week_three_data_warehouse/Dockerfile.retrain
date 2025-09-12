@@ -14,7 +14,7 @@ RUN apt-get update && apt-get install -y \
 VOLUME /root/keys
 
 # Copy retrain script
-COPY cron_job_ml_model.sh /usr/local/bin/cron_job_ml_model.sh
+COPY week_three_data_warehouse/cron_job_ml_model.sh /usr/local/bin/cron_job_ml_model.sh
 RUN chmod +x /usr/local/bin/cron_job_ml_model.sh
 
 # Add cron job (weekly & monthly)
