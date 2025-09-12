@@ -14,6 +14,7 @@
   - Kafka for Streaming and Pub/Sub
   - GCP Cloud Scheduler
   - MlFlow for logging ML result
-  - Monitoring Grafana
+  - Monitoring Grafana (here we use Cloud Monitoring from GCP)
+  - CI/CD via Github Actions
 
   
