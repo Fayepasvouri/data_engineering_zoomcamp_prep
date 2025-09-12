@@ -25,34 +25,26 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build and push Serving image
+      - name: Set image tag based on branch
+        id: vars
         run: |
-          # Convert repo name to lowercase
-          REPO_LC=$(echo "${{ github.repository }}" | tr '[:upper:]' '[:lower:]')
-          IMAGE_NAME=ghcr.io/${REPO_LC}/tip_model_serving
-          
-          if [[ "${{ github.ref_name }}" == "main" ]]; then
-            TAG=prod
+          echo "REPO_LC=$(echo '${{ github.repository }}' | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
+          if [[ "${GITHUB_REF_NAME}" == "main" ]]; then
+            echo "TAG=prod" >> $GITHUB_ENV
           else
-            TAG=dev
+            echo "TAG=dev" >> $GITHUB_ENV
           fi
 
+      - name: Build and push Serving image
+        run: |
+          IMAGE_NAME=ghcr.io/${REPO_LC}/tip_model_serving
           echo "Building $IMAGE_NAME:$TAG"
           docker build -t $IMAGE_NAME:$TAG -f week_three_data_warehouse/Dockerfile.serving .
           docker push $IMAGE_NAME:$TAG
 
       - name: Build and push Retrain image
         run: |
-          # Convert repo name to lowercase
-          REPO_LC=$(echo "${{ github.repository }}" | tr '[:upper:]' '[:lower:]')
           IMAGE_NAME=ghcr.io/${REPO_LC}/tip_model_retrain
-          
-          if [[ "${{ github.ref_name }}" == "main" ]]; then
-            TAG=prod
-          else
-            TAG=dev
-          fi
-
           echo "Building $IMAGE_NAME:$TAG"
           docker build -t $IMAGE_NAME:$TAG -f week_three_data_warehouse/Dockerfile.retrain .
           docker push $IMAGE_NAME:$TAG

@@ -1,23 +1,28 @@
 FROM python:3.9-slim
 
-# Install gcloud & gsutil
+# Install gcloud, gsutil, cron, curl
 RUN apt-get update && apt-get install -y \
-    curl gnupg && \
+    curl gnupg cron && \
     echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] http://packages.cloud.google.com/apt cloud-sdk main" \
-      | tee -a /etc/apt/sources.list.d/google-cloud-sdk.list && \
+    | tee -a /etc/apt/sources.list.d/google-cloud-sdk.list && \
     curl https://packages.cloud.google.com/apt/doc/apt-key.gpg \
-      | gpg --dearmor > /usr/share/keyrings/cloud.google.gpg && \
-    apt-get update && apt-get install -y google-cloud-sdk cron && \
+    | gpg --dearmor > /usr/share/keyrings/cloud.google.gpg && \
+    apt-get update && apt-get install -y google-cloud-sdk && \
     rm -rf /var/lib/apt/lists/*
 
-# Copy retraining script
+# Copy service account (mount from host at runtime)
+VOLUME /root/keys
+
+# Copy retrain script
 COPY cron_job_ml_model.sh /usr/local/bin/cron_job_ml_model.sh
 RUN chmod +x /usr/local/bin/cron_job_ml_model.sh
 
-# Add cron job (daily at midnight)
-RUN echo "0 0 * * * /usr/local/bin/cron_job_ml_model.sh >> /var/log/cron.log 2>&1" > /etc/cron.d/retrain
-RUN chmod 0644 /etc/cron.d/retrain
-RUN crontab /etc/cron.d/retrain
+# Add cron job (weekly & monthly)
+RUN echo "0 3 * * 1 /usr/local/bin/cron_job_ml_model.sh >> /var/log/cron.log 2>&1" >> /etc/cron.d/retrain \
+    && echo "0 3 1 * * /usr/local/bin/cron_job_ml_model.sh >> /var/log/cron.log 2>&1" >> /etc/cron.d/retrain \
+    && chmod 0644 /etc/cron.d/retrain \
+    && crontab /etc/cron.d/retrain
 
-# Run cron in foreground (Docker best practice)
+# Run cron in foreground
 CMD ["cron", "-f"]
+
