@@ -10,6 +10,7 @@
   - Kestra vs Airflow Orchestration (cron job/scheduler is included)
   - ML Deployment
   - ETL pipelines
+  - DBT for Analytics Engineering
   - Spark and Hadoop and DataProc (Dataflow can be used too) for Batch
   - Kafka for Streaming and Pub/Sub
   - GCP Cloud Scheduler
