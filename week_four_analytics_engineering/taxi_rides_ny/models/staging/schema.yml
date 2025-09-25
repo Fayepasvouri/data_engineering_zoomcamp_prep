@@ -2,7 +2,7 @@ version: 2
 
 sources:
   - name: staging
-    database: "{{ env_var('DBT_DATABASE', 'tzinc-epigram-471514-s3') }}"
+    database: "{{ env_var('DBT_DATABASE', 'zinc-epigram-471514-s3') }}"
     schema: "{{ env_var('DBT_SCHEMA', 'de_zoomcamp') }}"
       # loaded_at_field: record_loaded_at
     tables:
