@@ -41,3 +41,6 @@ models:
     example:
       +materialized: table
     # Applies to all files under models/
+
+dbt-cloud:
+  project-id: 204367
