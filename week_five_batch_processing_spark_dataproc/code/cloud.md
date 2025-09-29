@@ -32,8 +32,8 @@ Creating a stand-alone cluster ([docs](https://spark.apache.org/docs/latest/spar
 Creating a worker:
 
 ```bash
-URL="spark://de-zoomcamp.europe-west2-c.data-engineering-zoomcamp-unique-bucket.internal:7077"
-./sbin/start-slave.sh ${URL}
+URL="spark://instance-data-engineering-vm.europe-west2-c.c.zinc-epigram-471514-s3.internal:41075"
+./sbin/start-worker.sh ${URL}
 
 # for newer versions of spark use that:
 #./sbin/start-worker.sh ${URL}
@@ -57,7 +57,7 @@ python 06_spark_sql_big_query.py \
 Use `spark-submit` for running the script on the cluster
 
 ```bash
-URL="spark://de-zoomcamp.europe-west2-c.data-engineering-zoomcamp-unique-bucket.internal:7077"
+URL="spark://instance-data-engineering-vm.europe-west2-c.c.zinc-epigram-471514-s3.internal:41075"
 
 spark-submit \
     --master="${URL}" \
@@ -72,7 +72,7 @@ spark-submit \
 Upload the script to GCS:
 
 ```bash
-gsutil -m cp -r 06_spark_sql.py gs://data-engineering-zoomcamp-unique-bucket/code/06_spark_sql_big_query.py
+gsutil -m cp -r 06_spark_sql_big_query.py gs://data-engineering-zoomcamp-unique-bucket/code/06_spark_sql_big_query.py
 ```
 
 Params for the job:
@@ -89,7 +89,7 @@ Using Google Cloud SDK for submitting to dataproc
 gcloud dataproc jobs submit pyspark \
     --cluster=de-zoomcamp-cluster \
     --region=europe-west6 \
-    gs://ddata-engineering-zoomcamp-unique-bucket/code/06_spark_sql_big_query.py \
+    gs://data-engineering-zoomcamp-unique-bucket/code/06_spark_sql_big_query.py \
     -- \
         --input_green=gs://data-engineering-zoomcamp-unique-bucket/pq/green/2020/*/ \
         --input_yellow=gs://data-engineering-zoomcamp-unique-bucket/pq/yellow/2020/*/ \
