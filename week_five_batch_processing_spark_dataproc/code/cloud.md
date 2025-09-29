@@ -91,8 +91,8 @@ gcloud dataproc jobs submit pyspark \
     --region=europe-west6 \
     gs://data-engineering-zoomcamp-unique-bucket/code/06_spark_sql_big_query.py \
     -- \
-        --input_green=gs://data-engineering-zoomcamp-unique-bucket/pq/green/2020/*/ \
-        --input_yellow=gs://data-engineering-zoomcamp-unique-bucket/pq/yellow/2020/*/ \
+        --input_green=gs://data-engineering-zoomcamp-unique-bucket/green/2020/*/ \
+        --input_yellow=gs://data-engineering-zoomcamp-unique-bucket/yellow/2020/*/ \
         --output=gs://data-engineering-zoomcamp-unique-bucket/report-2020
 ```
 
@@ -113,8 +113,8 @@ gcloud dataproc jobs submit pyspark \
     --jars=gs://spark-lib/bigquery/spark-bigquery-latest_2.12.jar \
     gs://data-engineering-zoomcamp-unique-bucket/code/06_spark_sql_big_query.py \
     -- \
-        --input_green=gs://data-engineering-zoomcamp-unique-bucket/pq/green/2020/*/ \
-        --input_yellow=gs://data-engineering-zoomcamp-unique-bucket/pq/yellow/2020/*/ \
+        --input_green=gs://data-engineering-zoomcamp-unique-bucket/green/2020/*/ \
+        --input_yellow=gs://data-engineering-zoomcamp-unique-bucket/yellow/2020/*/ \
         --output=trips_data_all.reports-2020
 ```
 
