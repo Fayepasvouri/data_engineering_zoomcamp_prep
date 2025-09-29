@@ -49,8 +49,8 @@ Edit the script and then run it:
 
 ```bash 
 python 06_spark_sql_big_query.py \
-    --input_green=data/pq/green/2020/*/ \
-    --input_yellow=data/pq/yellow/2020/*/ \
+    --input_green=data/green/2020/*/ \
+    --input_yellow=data/yellow/2020/*/ \
     --output=data/report-2020
 ```
 
@@ -62,8 +62,8 @@ URL="spark://instance-data-engineering-vm.europe-west2-c.c.zinc-epigram-471514-s
 spark-submit \
     --master="${URL}" \
     06_spark_sql_big_query.py \
-        --input_green=data/pq/green/2021/*/ \
-        --input_yellow=data/pq/yellow/2021/*/ \
+        --input_green=data/green/2021/*/ \
+        --input_yellow=data/yellow/2021/*/ \
         --output=data/report-2021
 ```
 
@@ -77,8 +77,8 @@ gsutil -m cp -r 06_spark_sql_big_query.py gs://data-engineering-zoomcamp-unique-
 
 Params for the job:
 
-* `--input_green=gs://data-engineering-zoomcamp-unique-bucket/pq/green/2021/*/`
-* `--input_yellow=gs://data-engineering-zoomcamp-unique-bucket/pq/yellow/2021/*/`
+* `--input_green=gs://data-engineering-zoomcamp-unique-bucket/green/2021/*/`
+* `--input_yellow=gs://data-engineering-zoomcamp-unique-bucket/yellow/2021/*/`
 * `--output=gs://data-engineering-zoomcamp-unique-bucket/report-2021`
 
 
@@ -109,7 +109,7 @@ Write results to big query ([docs](https://cloud.google.com/dataproc/docs/tutori
 ```bash
 gcloud dataproc jobs submit pyspark \
     --cluster=de-zoomcamp-cluster \
-    --region=europe-west6 \
+    --region=europe-west2-c \
     --jars=gs://spark-lib/bigquery/spark-bigquery-latest_2.12.jar \
     gs://data-engineering-zoomcamp-unique-bucket/code/06_spark_sql_big_query.py \
     -- \
