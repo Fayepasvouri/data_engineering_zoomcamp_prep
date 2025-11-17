@@ -41,3 +41,22 @@ class Solution:
         left = maxDepth(root.left) # index size 0, 1 etc .. recursion is required in DFS
         right = maxDepth(root.right)
         return 1 + max(left, right) # index size + 1 to find depth
+# 111 leetcode easy 
+
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def minDepth(self, root: Optional[TreeNode]) -> int:
+        if root is None:
+            return 0 
+        
+        left = self.minDepth(root.left)
+        right = self.minDepth(root.right)
+        if left == 0:
+            return 1 + right
+        elif right == 0:
+            return 1 + left
+        return 1 + min(left, right)
