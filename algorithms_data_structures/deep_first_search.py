@@ -43,11 +43,11 @@ class Solution:
         return 1 + max(left, right) # index size + 1 to find depth
 # 111 leetcode easy 
 
-# class TreeNode:
-#     def __init__(self, val=0, left=None, right=None):
-#         self.val = val
-#         self.left = left
-#         self.right = right
+class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
 class Solution:
     def minDepth(self, root: Optional[TreeNode]) -> int:
         if root is None:
