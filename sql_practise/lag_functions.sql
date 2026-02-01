@@ -26,3 +26,12 @@ with daily_rank as (select trader_id, pnl_date, pnl,
            LAG(daily_ranking) OVER (PARTITION BY trader_id ORDER BY pnl_date) - daily_ranking as rank_change
     from daily_rank
     order by pnl_date, daily_ranking;
+
+with ranking as (select *,
+    LAG(pnl) OVER (PARTITION BY trader_id order by pnl_date) as prev_pnl,
+    LEAD(pnl) OVER (PARTITION BY trader_id order by pnl_date) as next_pnl,
+    LAG(pnl) OVER (PARTITION BY trader_id order by pnl_date) - pnl as pnl_change,
+    LEAD(pnl) OVER (PARTITION BY trader_id order by pnl_date) - pnl as next_pnl_change
+    from daily_pnl)
+    select *
+    from ranking;
