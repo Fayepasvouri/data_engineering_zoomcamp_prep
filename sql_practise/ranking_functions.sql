@@ -18,7 +18,6 @@ INSERT INTO trades (trade_id, trader_id, pnl, trade_date) VALUES
 (8, 104, 600, '2024-01-02'),
 (9, 104, 200, '2024-01-03');
 
-
 -- Query to find the second highest PnL for each trader
 
 WITH ranking as 
@@ -29,3 +28,4 @@ WITH ranking as
 select *
 from ranking
 where pnl_rank = 2;
+
