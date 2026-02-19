@@ -24,3 +24,7 @@
 - incremental logic
 
 - data quality checks
+
+- > 1 billion	Start considering Spark
+
+- 5B+	Spark usually cheaper
