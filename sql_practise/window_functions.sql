@@ -21,25 +21,28 @@ INSERT INTO order_events (event_id, order_id, event_time, status, quantity) VALU
 -- Edge Case: Later event arriving
 (6, 101, '2026-05-25 10:00:10', 'FILLED', 50);
 
-select order_id, 
+SELECT
+    order_id, 
     status, 
     quantity, 
     event_time
 
-from (select 
+from (SELECT
+    
     order_id,
     status,
     quantity,
     event_time,
-    row_number() over (partition by order_id order by event_time desc, -- latest time is filled with 1
-    CASE status 
-                    WHEN 'FILLED' THEN 1 
-                    WHEN 'CANCELLED' THEN 2 
-                    WHEN 'PARTIAL' THEN 3 
-                    WHEN 'NEW' THEN 4 
-                    ELSE 5 
-                END ASC) as rn --priority given to fill but if not exists moves to the next
+
+    ROW_NUMBER() over (PARTITION BY order_id ORDER BY event_time desc, -- latest time is filled with 1
+    CASE 
+        WHEN status = 'FILLED' THEN 1
+        WHEN status = 'CANCELLED' THEN 2
+        WHEN status = 'PARTIAL' THEN 3
+        WHEN status = 'NEW' THEN 4
+        ELSE 5
+    END ASC) as rn --priority given to fill but if not exists moves to the next
     from order_events)
 
 as final
-where rn = 1;
+WHERE rn = 1;
